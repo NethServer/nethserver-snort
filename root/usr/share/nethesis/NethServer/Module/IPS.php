@@ -55,8 +55,9 @@ class IPS extends \Nethgui\Controller\AbstractController
 
     protected function onParametersSaved($changes)
     {
-        #$this->getPlatform()->signalEvent('nethserver-snort-save');
-        #$this->getPlatform()->signalEvent('firewall-adjust');
+        $this->getPlatform()->signalEvent('nethserver-snort-save');
+        $this->getPlatform()->signalEvent('nethserver-pulledpork-save');
+        $this->getPlatform()->signalEvent('firewall-adjust');
     }
 
     public function prepareView(\Nethgui\View\ViewInterface $view) 
