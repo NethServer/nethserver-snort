@@ -39,7 +39,7 @@ class IPS extends \Nethgui\Controller\AbstractController
     public function initialize()
     {
         parent::initialize();
-        $this->declareParameter('status', Validate::SERVICESTATUS, array(array('configuration', 'snort', 'status'), array('configuration', 'firewall', 'nfqueue')));
+        $this->declareParameter('status', Validate::SERVICESTATUS, array(array('configuration', 'snortd', 'status'), array('configuration', 'firewall', 'nfqueue')));
         $this->declareParameter('Policy', $this->createValidator()->memberOf($this->policies), array('configuration', 'pulledpork', 'Policy'));
     }
 
@@ -55,8 +55,8 @@ class IPS extends \Nethgui\Controller\AbstractController
 
     protected function onParametersSaved($changes)
     {
-        $this->getPlatform()->signalEvent('nethserver-snort-save');
         $this->getPlatform()->signalEvent('nethserver-pulledpork-save');
+        $this->getPlatform()->signalEvent('nethserver-snort-save');
         $this->getPlatform()->signalEvent('firewall-adjust');
     }
 

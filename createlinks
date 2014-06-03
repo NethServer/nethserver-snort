@@ -41,7 +41,5 @@ event_actions($event, 'initialize-default-databases' => '00');
 $event = "nethserver-snort-save";
 
 event_templates($event, '/etc/snort/snort.conf');
-event_templates($event, '/etc/snort/pulledpork.conf');
-event_services($event, 'snortd' => 'reload');
-
+event_services($event, 'snortd' => 'restart');
 
