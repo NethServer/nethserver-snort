@@ -1,0 +1,112 @@
+# variable definitions
+{
+    use esmith::util;
+    use esmith::NetworksDB;
+    my $ndb = esmith::NetworksDB->open_ro();
+    my $green = $ndb->green;
+    my @nets;
+    foreach ($ndb->green) {
+        my $ipaddr = $_->prop('ipaddr') || next;
+        my $netmask = $_->prop('netmask') || next;
+        push(@nets, esmith::util::computeLocalNetworkShortSpec($ipaddr,$netmask));
+    }
+    $OUT .= "var HOME_NET [".join(',',@nets)."]\n";
+    $OUT .= "var DNS_SERVERS [".$dns{'NameServers'}."]\n";
+}
+
+var EXTERNAL_NET    	!$HOME_NET
+var SMTP_SERVERS    	$HOME_NET
+var DNS_SERVERS 	$HOME_NET
+var HTTP_SERVERS    	$HOME_NET
+var SQL_SERVERS     	$HOME_NET
+var TELNET_SERVERS  	$HOME_NET
+var SNMP_SERVERS 	$HOME_NET
+portvar HTTP_PORTS      [80,8080,3128]
+portvar SHELLCODE_PORTS [!80]
+portvar ORACLE_PORTS    1521
+portvar SSH_PORTS	[22,222]
+var SSH_PORTS 		[22,222]
+var AIM_SERVERS		[64.12.24.0/23,64.12.28.0/23,64.12.161.0/24,64.12.163.0/24,64.12.200.0/24,205.188.3.0/24,205.188.5.0/24,205.188.7.0/24,205.188.9.0/24,205.188.153.0/24,205.188.179.0/24,205.188.248.0/24]
+var RULE_PATH		/etc/snort/rules
+
+{
+    $version=`rpm --query --qf "%{VERSION}" snort`;
+    $OUT .= "dynamicpreprocessor directory /usr/lib64/snort-".$version."_dynamicpreprocessor/\n";
+    $OUT .= "dynamicengine /usr/lib64/snort-".$version."_dynamicengine/libsf_engine.so\n";
+}
+
+# Do NOT Edit past this line
+config daq: nfq
+config detection: search-method lowmem
+preprocessor frag3_global: max_frags 65536
+preprocessor frag3_engine: policy first detect_anomalies
+preprocessor stream5_global: max_tcp 8192, track_tcp yes, \
+                              track_udp no
+preprocessor stream5_tcp: policy first, use_static_footprint_sizes
+# preprocessor stream5_udp: ignore_any_rules
+preprocessor http_inspect: global iis_unicode_map unicode.map 1252
+preprocessor http_inspect_server: server default \
+                        ports  \{ 80 8080 3128 \}  \
+                        no_alerts \
+                        non_strict \
+                        non_rfc_char  \{ 0x00 \}  \
+                        flow_depth 0  \
+                        apache_whitespace yes \
+                        directory no \
+                        iis_backslash no \
+                        u_encode yes \
+                        ascii no \
+                        chunk_length 500000 \
+                        bare_byte yes \
+                        double_decode yes \
+                        iis_unicode yes \
+                        iis_delimiter yes \
+                        multi_slash no
+preprocessor rpc_decode: 111 32771
+preprocessor bo
+preprocessor ftp_telnet: global \
+    encrypted_traffic yes \
+    inspection_type stateful
+preprocessor ftp_telnet_protocol: telnet \
+    normalize \
+    ayt_attack_thresh 200
+preprocessor ftp_telnet_protocol: ftp server default \
+    def_max_param_len 100 \
+    alt_max_param_len 200 \{ CWD \} \
+    cmd_validity MODE < char ASBCZ > \
+    cmd_validity MDTM < [ date nnnnnnnnnnnnnn[.n[n[n]]] ] string > \
+    chk_str_fmt \{ USER PASS RNFR RNTO SITE MKD \} \
+    telnet_cmds yes \
+    data_chan
+preprocessor ftp_telnet_protocol: ftp client default \
+    max_resp_len 256 \
+    bounce yes \
+    telnet_cmds yes
+preprocessor smtp: \
+    ports \{ 25 587 691 \} \
+    inspection_type stateful \
+    normalize cmds \
+    normalize_cmds \{ EXPN VRFY RCPT \} \
+    alt_max_command_line_len 260 \{ MAIL \} \
+    alt_max_command_line_len 300 \{ RCPT \} \
+    alt_max_command_line_len 500 \{ HELP HELO ETRN \} \
+    alt_max_command_line_len 255 \{ EXPN VRFY \}
+preprocessor sfportscan: proto  \{ all \} \
+    memcap \{ 10000000 \} \
+    sense_level \{ low \}
+preprocessor arpspoof
+preprocessor dns: \
+    ports \{ 53 \} \
+    enable_rdata_overflow
+
+#=========================================
+include ./classification.config
+include ./reference.config
+#=========================================
+
+# output plugins
+output alert_syslog: LOG_LOCAL6 LOG_ALERT LOG_CONS LOG_NDELAY LOG_PERROR LOG_PID 
+
+# pulledpork rules
+include /etc/snort/rules/snort.rules
+
