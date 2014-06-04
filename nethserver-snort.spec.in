@@ -9,8 +9,8 @@ Packager: Giacomo Sanchietti <giacomo@nethesis.it>
 
 BuildArch: noarch
 
-Requires: snort, nethserver-pulledpork
-Requires: nethserver-base
+Requires: snort, snortalog
+Requires: nethserver-base, nethserver-pulledpork
 
 BuildRequires: nethserver-devtools
 AutoReq: no
