@@ -9,6 +9,6 @@ $L['IPS_header'] = 'Gestione IPS';
 $L['IPS_Tags'] = 'IPS ips snort Snort';
 $L['IPS_Title'] = 'IPS';
 $L['Policy_label'] = 'Policy regole';
-$L['security_label'] = 'Security'
+$L['security_label'] = 'Security';
 $L['expert_label'] = 'Esperto';
 $L['status_label'] = 'Stato';
