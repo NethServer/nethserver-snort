@@ -3,7 +3,7 @@
     # 20snort
     #
     push @cmnd_alias_httpd_admin, qw(
-        /usr/share/snortalog/snortalog.pl
+        /usr/libexec/nethserver/snort-report
     );
     '';
 }
