@@ -23,6 +23,7 @@ Snort IPS module for NethServer.
 %setup -q
 
 %build
+%{makedocs}
 perl createlinks
 
 %install
