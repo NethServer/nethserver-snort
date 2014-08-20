@@ -43,3 +43,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Wed Aug 20 2014 Davide Principi <davide.principi@nethesis.it> - 1.0.0-1.ns6
+- IDS/IPS (snort) - Feature #1771 [NethServer]
+
