@@ -1,7 +1,7 @@
 Summary: NethServer Snort IPS module
 Name: nethserver-snort
 Version: 1.0.0
-Release: 1
+Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
 
