@@ -1,5 +1,5 @@
 <?php
-namespace NethServer\Module\Dashboard;
+namespace NethServer\Module;
 
 /*
  * Copyright (C) 2011 Nethesis S.r.l.
@@ -28,17 +28,22 @@ use Nethgui\System\PlatformInterface as Validate;
  * @author Giacomo Sanchietti
  *
  */
-class IPS extends \Nethgui\Controller\AbstractController
+class IPSStatus extends \Nethgui\Controller\AbstractController
 {
 
-    public $sortId = 80;
     private $report;
     private $logs;
     private $path = '/var/log/snort';
 
+    protected function initializeAttributes(\Nethgui\Module\ModuleAttributesInterface $base)
+    {
+        return \Nethgui\Module\SimpleModuleAttributesProvider::extendModuleAttributes($base, 'Status');
+    }
+
+
     private function listLogs()
     {
-        $logs = array('alert');
+        $logs = array();
 
         foreach (scandir($this->path) as $log) {
             if (preg_match('/alert-(\d)+.gz/', $log) ) {
@@ -46,6 +51,8 @@ class IPS extends \Nethgui\Controller\AbstractController
             }
         }
 
+        arsort($logs);
+        array_unshift($logs,'alert');
         return $logs;
     }
 
