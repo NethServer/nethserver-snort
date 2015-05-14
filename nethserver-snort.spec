@@ -9,7 +9,7 @@ BuildArch: noarch
 
 Requires: snort = 1:2.9.7.2-2, snortalog
 Requires: perl-GDGraph
-Requires: nethserver-base, nethserver-pulledpork
+Requires: nethserver-firewall-base, nethserver-pulledpork
 
 BuildRequires: nethserver-devtools
 AutoReq: no
