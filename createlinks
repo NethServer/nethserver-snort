@@ -43,3 +43,12 @@ $event = "nethserver-snort-save";
 event_templates($event, '/etc/snort/snort.conf');
 event_services($event, 'snortd' => 'restart');
 
+#--------------------------------------------------
+# actions for trusted-networks-modify event
+#--------------------------------------------------
+
+$event = "trusted-networks-modify";
+
+event_templates($event, '/etc/snort/snort.conf');
+event_services($event, 'snortd' => 'restart');
+
