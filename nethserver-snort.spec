@@ -1,6 +1,6 @@
 Summary: NethServer Snort IPS module
 Name: nethserver-snort
-Version: 1.0.1
+Version: 1.0.2
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -44,6 +44,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Wed Jul 15 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.2-1
+- snort HOME_NET should include trusted networks - Enhancement #3221 [NethServer]
+- snort DNS_SERVERS var redefined - Bug #3211 [NethServer]
+
 * Tue May 19 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.1-1
 - snort does not start if policy=security - Bug #3161 [NethServer]
 - Dashboard: execute snortalog only when accessing IPS tab - Enhancement #2864 [NethServer]
