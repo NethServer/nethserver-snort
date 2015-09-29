@@ -1,6 +1,6 @@
 Summary: NethServer Snort IPS module
 Name: nethserver-snort
-Version: 1.0.2
+Version: 1.0.3
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Tue Sep 29 2015 Davide Principi <davide.principi@nethesis.it> - 1.0.3-1
+- Make Italian language pack optional - Enhancement #3265 [NethServer]
+
 * Wed Jul 15 2015 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 1.0.2-1
 - snort HOME_NET should include trusted networks - Enhancement #3221 [NethServer]
 - snort DNS_SERVERS var redefined - Bug #3211 [NethServer]
