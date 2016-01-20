@@ -12,7 +12,6 @@ Requires: perl-GDGraph
 Requires: nethserver-firewall-base, nethserver-pulledpork
 
 BuildRequires: nethserver-devtools
-AutoReq: no
 
 %description
 Snort IPS module for NethServer.
@@ -26,10 +25,9 @@ Snort IPS module for NethServer.
 perl createlinks
 
 %install
-rm -rf $RPM_BUILD_ROOT
-(cd root ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
-rm -f %{name}-%{version}-%{release}-filelist
-/sbin/e-smith/genfilelist $RPM_BUILD_ROOT > %{name}-%{version}-%{release}-filelist
+rm -rf %{buildroot}
+(cd root ; find . -depth -print | cpio -dump %{buildroot})
+%{genfilelist} %{buildroot} > %{name}-%{version}-%{release}-filelist
 echo "%doc COPYING" >> %{name}-%{version}-%{release}-filelist
 
 
@@ -42,6 +40,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}-%{version}-%{release}-filelist
 %defattr(-,root,root)
+%dir %{_nseventsdir}/%{name}-update
 
 %changelog
 * Tue Sep 29 2015 Davide Principi <davide.principi@nethesis.it> - 1.0.3-1
