@@ -7,7 +7,7 @@ Source0: %{name}-%{version}.tar.gz
 
 BuildArch: noarch
 
-Requires: snort = 1:2.9.7.2-2, snortalog
+Requires: snort >= 2.9.8, snortalog
 Requires: perl-GDGraph
 Requires: nethserver-firewall-base, nethserver-pulledpork
 
