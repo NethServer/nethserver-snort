@@ -1,6 +1,6 @@
 Summary: NethServer Snort IPS module
 Name: nethserver-snort
-Version: 1.0.3
+Version: 1.1.0
 Release: 1%{?dist}
 License: GPL
 Source0: %{name}-%{version}.tar.gz
@@ -43,6 +43,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Thu Jul 07 2016 Stefano Fancello <stefano.fancello@nethesis.it> - 1.1.0-1
+- First NS7 release
+
 * Tue Sep 29 2015 Davide Principi <davide.principi@nethesis.it> - 1.0.3-1
 - Make Italian language pack optional - Enhancement #3265 [NethServer]
 
