@@ -1,13 +1,13 @@
 [main]
 host = https://www.transifex.com
 
-[nethserver.IPSStatus]
+[nethserver-v6.IPSStatus]
 source_file = root/usr/share/nethesis/NethServer/Language/en/NethServer_Module_IPSStatus.php
 source_lang = en
 type = PHP_ALT_ARRAY
 
 
-[nethserver.IPS]
+[nethserver-v6.IPS]
 source_file = root/usr/share/nethesis/NethServer/Language/en/NethServer_Module_IPS.php
 source_lang = en
 type = PHP_ALT_ARRAY
